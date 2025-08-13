@@ -1,5 +1,4 @@
 import sentencepiece as snp
-from model import ModelArgs, Transformer
 import torch
 import torch.nn.functional as F
 from datasets import load_dataset
@@ -36,11 +35,13 @@ def benchmarking(prefix, sample):
 
     llh_tokens = logprobs.gather(2,cont_targets.unsqueeze(-1)).squeeze(-1)
     total_llh = llh_tokens.sum(dim=1)
+    
     mean_llh = -llh_tokens.mean(dim=1)
     return mean_llh.item()
 
 total_acc = 0
-acc_list = []
+sample1_scores,sample2_scores,acc_list = [],[],[]
+
 start = perf_counter()
 for i,data in enumerate(dataset):
     prefix = data["prefix"]
@@ -53,6 +54,8 @@ for i,data in enumerate(dataset):
     print(f"\tscore1: {score1}\n")
     print(f"\tscore2: {score2}\n\n\n")
 
+    sample1_scores.append(score1)
+    sample2_scores.append(score2)
 
     if score1 < score2: 
         acc_list.append(1) 
@@ -61,5 +64,9 @@ for i,data in enumerate(dataset):
 
 
 print(f"model TWO score : {statistics.mean(acc_list)}")
+print(f"model ortalama Gramatik loss : {statistics.mean(sample1_scores)}")
+print(f"model ortalama Agramatik loss : {statistics.mean(sample2_scores)}")
+
+
 end = perf_counter()
 print(f"time: {end - start:.4f} second")

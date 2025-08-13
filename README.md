@@ -1,5 +1,5 @@
 TWO-Bench Benchmarking Script
 
--Bu proje, TWO-Bench veri kümesi üzerinde kendi pre-train edilmiş küçük dil modellerimizi kıyaslamak amacıyla hazırlanmış bir benchmark scriptidir.
+-This project is a benchmark script designed to compare our own pre-trained small language models on the TWO-Bench dataset.
 
--Benchmark, modele bir prefix  vererek iki farklı devam cümlesinin (biri düzgün, diğeri devrik veya hatalı) olasılığını hesaplar. Daha olası gördüğü devamın düzgün cümle olması beklenir.
+-The benchmark feeds the model a prefix and evaluates the likelihood of two different continuations (one correct/grammatical, the other inverted or ungrammatical). The model is expected to assign a higher probability to the correct continuation.
